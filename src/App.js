@@ -12,6 +12,16 @@ class App extends Component {
     ]
   };
 
+  constructor() {
+    super();
+    console.log("App- const");
+  }
+
+  componentDidMount() {
+    //AJAX CALL
+    console.log("component mounted");
+  }
+
   handleIncrement = counter => {
     //console.log(" passed counter is ", counter);
 
@@ -33,12 +43,37 @@ class App extends Component {
 */
     this.setState({ counters });
   };
+
   handleDelete = counterId => {
     const counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
     // console.log("Event raised", counters);
   };
 
+  handleDecrement = counter => {
+    //console.log(" passed counter is ", counter);
+
+    // console.log(" handle increment event raised");
+    const counters = [...this.state.counters];
+    // console.log(" Counters are, ", counters);
+
+    const index = counters.indexOf(counter);
+    // console.log(" index of passed counter is ", index);
+
+    counters[index] = { ...counter };
+    //console.log(" value of counters[index] is ", ...counter);
+
+    if (counters[index].value > 0) {
+      counters[index].value--;
+    }
+
+    /* console.log(
+      " after increment value of counters[index] is ",
+      counters[index].value++
+    );
+*/
+    this.setState({ counters });
+  };
   handleReset = () => {
     const counters = this.state.counters.map(c => {
       c.value = 0;
@@ -47,6 +82,7 @@ class App extends Component {
     this.setState({ counters });
   };
   render() {
+    console.log("App - Rendred");
     return (
       <React.Fragment>
         <NavBar
@@ -58,6 +94,7 @@ class App extends Component {
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
+            onDecrement={this.handleDecrement}
           />
         </main>
       </React.Fragment>
